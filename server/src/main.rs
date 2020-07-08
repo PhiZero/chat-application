@@ -29,12 +29,12 @@ fn main() {
 
                 match socket.read_exact(&mut buff) {
                     Ok(_) => {
-                        let msg = buff.into_iter().take_while(|&x| x != 0).collect::<vec<_>>();
+                        let msg = buff.into_iter().take_while(|&x| x != 0).collect::<Vec<_>>();
                         let msg = String::from_utf8(msg).expect("Invalid utf8 message");
 
                         println!("{}: {:?}", addr, msg);
                         tx.send(msg).expect("failed to send msg to rx");
-                    }
+                    },
                     Err(ref err) if err.kind() == ErrorKind::WouldBlock => (),
                     Err(_) => {
                         println!("closing connection with: {}", addr);
